@@ -10,7 +10,7 @@ import com.matrimony.cassini.repository.ReligionRepository;
 
 @Service
 public class ReligionServiceImpl implements ReligionService {
-	
+
 	@Autowired
 	ReligionRepository religionRepository;
 

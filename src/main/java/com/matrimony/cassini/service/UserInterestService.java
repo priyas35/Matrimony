@@ -8,5 +8,6 @@ import com.matrimony.cassini.entity.User;
 public interface UserInterestService {
 	
 	List<User> getAllFilteredUsers(InterestRequestDto interestRequestDto);
+	List<User> acceptedDetails(Integer userId);
 
 }
