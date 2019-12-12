@@ -24,23 +24,25 @@ import com.matrimony.cassini.service.UserInterestService;
 @RequestMapping("/interest")
 @CrossOrigin
 public class UserInterestController {
-	
+
 	@Autowired
 	UserInterestService userInterestService;
-	
+
 	@GetMapping("/{userId}/accepted")
 	public ResponseEntity<List<User>> acceptedDetails(@PathVariable("userId") Integer userId) {
 		return ResponseEntity.ok().body(userInterestService.acceptedDetails(userId));
-		
+
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<List<User>> getAllFilteredUsers(@RequestBody FilterRequestDto filterRequestDto){
+	public ResponseEntity<List<User>> getAllFilteredUsers(@RequestBody FilterRequestDto filterRequestDto) {
 		return ResponseEntity.ok().body(userInterestService.getAllFilteredUsers(filterRequestDto));
 	}
+
 	@PostMapping("/request")
-	public ResponseEntity<InterestResponseDto> showInterest(@RequestBody InterestRequestDto interestRequestDto) throws UserNotFoundException {
-	return new ResponseEntity<>(userInterestService.showInterest(interestRequestDto), HttpStatus.CREATED);
+	public ResponseEntity<InterestResponseDto> showInterest(@RequestBody InterestRequestDto interestRequestDto)
+			throws UserNotFoundException {
+		return new ResponseEntity<>(userInterestService.showInterest(interestRequestDto), HttpStatus.CREATED);
 
 	}
 }
