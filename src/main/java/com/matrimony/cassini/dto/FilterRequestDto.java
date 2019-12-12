@@ -13,7 +13,5 @@ public class FilterRequestDto {
 	private String occupation;
 	private String religion;
 	private LocalDate dateOfBirth;
-	private Integer fromUserId;
-	private Integer toUserId;
 
 }
