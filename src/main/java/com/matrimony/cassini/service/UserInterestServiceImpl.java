@@ -35,7 +35,12 @@ public class UserInterestServiceImpl implements UserInterestService {
 		Optional<User> user = userRepository.findById(filterRequestDto.getUserId());
 		if (user.isPresent()) {
 			List<User> users = userRepository.findByGenderNot(user.get().getGender());
-
+			List<UserInterest> userInterests = userInterestRepository.findByToUser(user.get());
+			for (UserInterest userInterest : userInterests) {
+				users = users.stream()
+						.filter(user1 -> !(user1.getUserId().equals(userInterest.getFromUser().getUserId())))
+						.collect(Collectors.toList());
+			}
 			if (filterRequestDto.getOccupation() != null) {
 				users = users.stream().filter(user1 -> user1.getOccupation().equals(filterRequestDto.getOccupation()))
 						.collect(Collectors.toList());
@@ -89,7 +94,7 @@ public class UserInterestServiceImpl implements UserInterestService {
 		return interestResponseDto;
 
 	}
-	
+
 	@Override
 	public List<Optional<User>> requestList(Integer userId) throws RequestNotRaisedException {
 		Optional<User> currentuser = userRepository.findById(userId);
@@ -112,7 +117,8 @@ public class UserInterestServiceImpl implements UserInterestService {
 	public String userResponse(UserAcceptanceRequestDto userAcceptanceRequestDto) throws UserMappingNotFound {
 		Optional<User> fromUser = userRepository.findById(userAcceptanceRequestDto.getFromUserId());
 		Optional<User> toUser = userRepository.findById(userAcceptanceRequestDto.getToUserId());
-		Optional<UserInterest> userMapping = userInterestRepository.findByFromUserAndToUser(toUser.get(), fromUser.get());
+		Optional<UserInterest> userMapping = userInterestRepository.findByFromUserAndToUser(toUser.get(),
+				fromUser.get());
 		if (!userMapping.isPresent()) {
 			throw new UserMappingNotFound(Constant.USER_MAPPING_NOT_FOUND);
 		} else {

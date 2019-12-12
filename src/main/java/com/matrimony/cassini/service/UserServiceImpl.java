@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.matrimony.cassini.dto.LoginRequestDto;
 import com.matrimony.cassini.dto.RegisterResponseDto;
+import com.matrimony.cassini.dto.UserRegistrationRequestDto;
 import com.matrimony.cassini.entity.User;
 import com.matrimony.cassini.repository.UserRepository;
 
@@ -23,7 +24,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public RegisterResponseDto saveUser(User user) {
+	public RegisterResponseDto saveUser(UserRegistrationRequestDto userRegistrationRequestDto) {
+		User user = new User();
+		user.setFullName(userRegistrationRequestDto.getFullName());
+		user.setCity(userRegistrationRequestDto.getCity());
+		user.setDateOfBirth(userRegistrationRequestDto.getDateOfBirth());
+		user.setEmail(userRegistrationRequestDto.getEmail());
+		user.setGender(userRegistrationRequestDto.getGender());
+		user.setHeight(userRegistrationRequestDto.getHeight());
+		user.setMotherTongue(userRegistrationRequestDto.getMotherTongue());
+		user.setOccupation(userRegistrationRequestDto.getOccupation());
+		user.setPassword(userRegistrationRequestDto.getPassword());
+		user.setQualification(userRegistrationRequestDto.getQualification());
+		user.setReligion(userRegistrationRequestDto.getReligion());
+		user.setUserName(userRegistrationRequestDto.getUserName());
 		userRepository.save(user);
 		RegisterResponseDto registerResponseDto = new RegisterResponseDto();
 		registerResponseDto.setMessage("success");
