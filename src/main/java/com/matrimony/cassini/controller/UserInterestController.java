@@ -53,14 +53,14 @@ public class UserInterestController {
 	
 	@GetMapping("/{userId}/interest")
 	public ResponseEntity<List<Optional<User>>> getInterestedList(Integer userId) throws RequestNotRaisedException{
-		List<Optional<User>> users =userMappingService.requestList(userId);
+		List<Optional<User>> users =userInterestService.requestList(userId);
 		return new ResponseEntity<>(users,HttpStatus.OK);
 	}
 	
 	
 	@PutMapping
 	public ResponseEntity<String> userResponse(@RequestBody UserAcceptanceRequestDto userAcceptanceRequestDto) throws UserMappingNotFound, RequestNotRaisedException{
-		String result =userMappingService.userResponse(userAcceptanceRequestDto);
+		String result =userInterestService.userResponse(userAcceptanceRequestDto);
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 }
