@@ -18,4 +18,6 @@ public interface UserInterestRepository extends JpaRepository<UserInterest, Inte
 
 	Optional<UserInterest> findByFromUserAndToUser(User fromUser, User toUser);
 
+	List<UserInterest> findByToUser(User user);
+
 }
