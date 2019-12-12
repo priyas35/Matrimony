@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.matrimony.cassini.constants.Constant;
 import com.matrimony.cassini.entity.User;
 import com.matrimony.cassini.entity.UserIntrest;
 import com.matrimony.cassini.repository.UserIntrestRepository;
@@ -27,7 +28,7 @@ public class UserIntrestServiceImpl implements UserIntrestService {
 		
 		Optional<User> user = userRepository.findById(userId);
 
-		String Status = "Approved";
+		String Status = Constant.STATUS;
 		List<UserIntrest> uiserMappings = userIntrestRepository.findByFromUserAndStatus(user.get(), Status);
 		List<User> users = new ArrayList<>();
 		for (UserIntrest UserMapping : uiserMappings) {

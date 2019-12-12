@@ -1,6 +1,7 @@
 package com.matrimony.cassini.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +24,12 @@ public class UserController {
 	@PostMapping("login")
 	public ResponseEntity<User> userLogin(@RequestBody LoginRequestDto loginRequestDto) {
 		return ResponseEntity.ok().body(userService.userLogin(loginRequestDto));
-		
+	}
+	
+	@PostMapping
+	public ResponseEntity<String> saveUser(@RequestBody User user){
+		String result =userService.saveUser(user);
+		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 
 }
