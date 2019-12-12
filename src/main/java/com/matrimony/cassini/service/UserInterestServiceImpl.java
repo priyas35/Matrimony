@@ -16,7 +16,6 @@ import com.matrimony.cassini.dto.UserAcceptanceRequestDto;
 import com.matrimony.cassini.entity.User;
 import com.matrimony.cassini.entity.UserInterest;
 import com.matrimony.cassini.exception.RequestNotRaisedException;
-import com.matrimony.cassini.exception.UserMappingNotFound;
 import com.matrimony.cassini.exception.UserNotFoundException;
 import com.matrimony.cassini.repository.UserInterestRepository;
 import com.matrimony.cassini.repository.UserRepository;
@@ -41,6 +40,13 @@ public class UserInterestServiceImpl implements UserInterestService {
 						.filter(user1 -> !(user1.getUserId().equals(userInterest.getFromUser().getUserId())))
 						.collect(Collectors.toList());
 			}
+			List<UserInterest> userInterests1 = userInterestRepository.findByFromUserAndStatus(user.get(), "Requested");
+			for (UserInterest userInterest : userInterests1) {
+				users = users.stream()
+						.filter(user1 -> !(user1.getUserId().equals(userInterest.getToUser().getUserId())))
+						.collect(Collectors.toList());
+			}
+
 			if (filterRequestDto.getOccupation() != null) {
 				users = users.stream().filter(user1 -> user1.getOccupation().equals(filterRequestDto.getOccupation()))
 						.collect(Collectors.toList());
@@ -101,7 +107,7 @@ public class UserInterestServiceImpl implements UserInterestService {
 		Optional<User> currentuser = userRepository.findById(userId);
 		List<UserInterest> userInterests = userInterestRepository.findAllUserMappingsByToUserAndStatus(currentuser,
 				Constant.REQUESTED);
-		List<Optional<User>> users = new ArrayList<Optional<User>>();
+		List<Optional<User>> users = new ArrayList<>();
 		if (userInterests.isEmpty()) {
 			throw new RequestNotRaisedException(Constant.REQUEST_NOT_RAISED);
 		} else {
@@ -115,18 +121,23 @@ public class UserInterestServiceImpl implements UserInterestService {
 	}
 
 	@Override
-	public String userResponse(UserAcceptanceRequestDto userAcceptanceRequestDto) throws UserMappingNotFound {
+	public String userResponse(UserAcceptanceRequestDto userAcceptanceRequestDto)
+			throws RequestNotRaisedException, UserNotFoundException {
 		Optional<User> fromUser = userRepository.findById(userAcceptanceRequestDto.getFromUserId());
 		Optional<User> toUser = userRepository.findById(userAcceptanceRequestDto.getToUserId());
-		Optional<UserInterest> userMapping = userInterestRepository.findByFromUserAndToUser(toUser.get(),
+		if (!toUser.isPresent() && fromUser.isPresent()) {
+			throw new UserNotFoundException(Constant.USER_NOT_FOUND);
+		}else {
+		Optional<UserInterest> userInterests = userInterestRepository.findByFromUserAndToUser(toUser.get(),
 				fromUser.get());
-		if (!userMapping.isPresent()) {
-			throw new UserMappingNotFound(Constant.USER_MAPPING_NOT_FOUND);
+		
+		if (!userInterests.isPresent()) {
+			throw new RequestNotRaisedException(Constant.REQUEST_NOT_RAISED);
 		} else {
 			if (userAcceptanceRequestDto.getStatusCode().equals(Constant.ACCEPTED_CODE)) {
 
-				userMapping.get().setStatus(Constant.ACCEPTED);
-				userInterestRepository.save(userMapping.get());
+				userInterests.get().setStatus(Constant.ACCEPTED);
+				userInterestRepository.save(userInterests.get());
 				UserInterest acceptedUserMapping = new UserInterest();
 				acceptedUserMapping
 						.setFromUser(userRepository.findById(userAcceptanceRequestDto.getFromUserId()).get());
@@ -135,10 +146,12 @@ public class UserInterestServiceImpl implements UserInterestService {
 				userInterestRepository.save(acceptedUserMapping);
 				return Constant.ACCEPTED;
 			} else {
-				userMapping.get().setStatus(Constant.REJECTED);
-				userInterestRepository.save(userMapping.get());
+				userInterests.get().setStatus(Constant.REJECTED);
+				userInterestRepository.save(userInterests.get());
 				return Constant.REJECTED;
 			}
+		}
+
 		}
 	}
 

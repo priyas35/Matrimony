@@ -9,7 +9,6 @@ import com.matrimony.cassini.dto.InterestResponseDto;
 import com.matrimony.cassini.dto.UserAcceptanceRequestDto;
 import com.matrimony.cassini.entity.User;
 import com.matrimony.cassini.exception.RequestNotRaisedException;
-import com.matrimony.cassini.exception.UserMappingNotFound;
 import com.matrimony.cassini.exception.UserNotFoundException;
 
 public interface UserInterestService {
@@ -21,7 +20,7 @@ public interface UserInterestService {
 
 	List<Optional<User>> requestList(Integer userId) throws RequestNotRaisedException;
 
-	String userResponse(UserAcceptanceRequestDto userAcceptanceRequestDto) throws UserMappingNotFound;
+	String userResponse(UserAcceptanceRequestDto userAcceptanceRequestDto) throws RequestNotRaisedException, UserNotFoundException;
 
 	InterestResponseDto showInterest(InterestRequestDto interestRequestDto) throws UserNotFoundException;
 

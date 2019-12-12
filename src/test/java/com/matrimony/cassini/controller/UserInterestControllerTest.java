@@ -14,20 +14,22 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
 
+import com.matrimony.cassini.dto.FilterRequestDto;
 import com.matrimony.cassini.entity.User;
-import com.matrimony.cassini.service.UserInterestServiceImpl;
+import com.matrimony.cassini.service.UserInterestService;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
 public class UserInterestControllerTest {
 
 	@Mock
-	private UserInterestServiceImpl userInterestServiceImpl;
-	
+	private UserInterestService userInterestService;
+
 	@InjectMocks
 	private UserInterestController userInterestController;
-	
+
 	User user = null;
 	List<User> userlist = null;
+
 	@Test
 	public void testAcceptedDetails() {
 		userlist = new ArrayList<>();
@@ -45,8 +47,14 @@ public class UserInterestControllerTest {
 		user.setOccupation("doc");
 		user.setReligion("hind");
 		userlist.add(user);
-		Mockito.when(userInterestServiceImpl.acceptedDetails(1)).thenReturn(userlist);
+		Mockito.when(userInterestService.acceptedDetails(1)).thenReturn(userlist);
 		ResponseEntity<List<User>> users = userInterestController.acceptedDetails(1);
 		assertNotNull(users);
+	}
+
+	@Test
+	public void getAllFilteredUsersTest() {
+		Mockito.when(userInterestService.getAllFilteredUsers(Mockito.any())).thenReturn(new ArrayList<User>());
+		assertNotNull(userInterestController.getAllFilteredUsers(new FilterRequestDto()));
 	}
 }

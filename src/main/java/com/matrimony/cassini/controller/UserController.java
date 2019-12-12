@@ -31,12 +31,14 @@ public class UserController {
 	@PostMapping("login")
 	public ResponseEntity<Optional<User>> userLogin(@RequestBody LoginRequestDto loginRequestDto)
 			throws UserNotFoundException {
+		logger.info("to authenticate user");
 		return ResponseEntity.ok().body(userService.userLogin(loginRequestDto));
 	}
 
 	@PostMapping
 	public ResponseEntity<RegisterResponseDto> saveUser(
 			@RequestBody UserRegistrationRequestDto userRegistrationRequestDto) {
+		logger.info("to save user");
 		return ResponseEntity.ok().body(userService.saveUser(userRegistrationRequestDto));
 	}
 

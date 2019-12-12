@@ -11,7 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.http.ResponseEntity;
 
 import com.matrimony.cassini.dto.LoginRequestDto;
 import com.matrimony.cassini.dto.RegisterResponseDto;
@@ -47,6 +46,7 @@ public class UserServiceTest {
 		Optional<User> users = userServiceImpl.userLogin(loginRequestDto);
 		assertNotNull(users);
 	}
+
 	@Test
 	public void testSaveUser() {
 		UserRegistrationRequestDto userRegistrationRequestDto = new UserRegistrationRequestDto();

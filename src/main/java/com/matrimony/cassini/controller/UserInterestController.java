@@ -21,7 +21,6 @@ import com.matrimony.cassini.dto.InterestResponseDto;
 import com.matrimony.cassini.dto.UserAcceptanceRequestDto;
 import com.matrimony.cassini.entity.User;
 import com.matrimony.cassini.exception.RequestNotRaisedException;
-import com.matrimony.cassini.exception.UserMappingNotFound;
 import com.matrimony.cassini.exception.UserNotFoundException;
 import com.matrimony.cassini.service.UserInterestService;
 
@@ -59,7 +58,8 @@ public class UserInterestController {
 	
 	
 	@PutMapping
-	public ResponseEntity<String> userResponse(@RequestBody UserAcceptanceRequestDto userAcceptanceRequestDto) throws UserMappingNotFound, RequestNotRaisedException{
+	public ResponseEntity<String> userResponse(@RequestBody UserAcceptanceRequestDto userAcceptanceRequestDto)
+			throws RequestNotRaisedException, UserNotFoundException{
 		String result =userInterestService.userResponse(userAcceptanceRequestDto);
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
