@@ -35,10 +35,12 @@ public class UserInterestServiceImpl implements UserInterestService {
 
 	@Autowired
 	UserInterestRepository userInterestRepository;
+
 	/**
 	 * This API is used to get the users while searching the opposite sex users
-	 * filterRequestdto includes userID,occupation,religion,dateOfBirth 
-	 * This returns the users as per the requirements after filtering occupation,dateOfBirth and religion
+	 * filterRequestdto includes userID,occupation,religion,dateOfBirth This returns
+	 * the users as per the requirements after filtering occupation,dateOfBirth and
+	 * religion
 	 */
 
 	@Override
@@ -46,9 +48,12 @@ public class UserInterestServiceImpl implements UserInterestService {
 		Optional<User> user = userRepository.findById(filterRequestDto.getUserId());
 		if (user.isPresent()) {
 			List<User> users = userRepository.findByGenderNot(user.get().getGender());
-			users = users.stream().filter(user1 -> user1.getOccupation().equals(filterRequestDto.getOccupation())
-					&& user1.getReligion().equals(filterRequestDto.getReligion())).collect(Collectors.toList());
-
+			List<UserInterest> userInterests = userInterestRepository.findByToUser(user.get());
+			for (UserInterest userInterest : userInterests) {
+				users = users.stream()
+						.filter(user1 -> !(user1.getUserId().equals(userInterest.getFromUser().getUserId())))
+						.collect(Collectors.toList());
+			}
 			if (filterRequestDto.getOccupation() != null) {
 				users = users.stream().filter(user1 -> user1.getOccupation().equals(filterRequestDto.getOccupation()))
 						.collect(Collectors.toList());
@@ -67,9 +72,10 @@ public class UserInterestServiceImpl implements UserInterestService {
 			return new ArrayList<>();
 		}
 	}
+
 	/**
-	 * Here by passing the userId the users who accepted the request their details could be 
-	 * listed by finding the sender and their status
+	 * Here by passing the userId the users who accepted the request their details
+	 * could be listed by finding the sender and their status
 	 * 
 	 */
 
@@ -86,18 +92,20 @@ public class UserInterestServiceImpl implements UserInterestService {
 		}
 		return users;
 	}
+
 	/**
-	 * This method is used to  send the request or show interest to opposite 
-	 * user with the message request sent successfully
+	 * This method is used to send the request or show interest to opposite user
+	 * with the message request sent successfully
 	 * 
-	 * interestRequestDto contains fromUserId and toUserId in which the request 
-	 * sent from one user to other user 
+	 * interestRequestDto contains fromUserId and toUserId in which the request sent
+	 * from one user to other user
 	 * 
-	 * This method returns the interestResponseDto which contains statuscode and message
-	 * UserNotFoundException occurs when toUserId is not found 
-	 * while sending the request or showing interest
+	 * This method returns the interestResponseDto which contains statuscode and
+	 * message UserNotFoundException occurs when toUserId is not found while sending
+	 * the request or showing interest
 	 */
 
+	@Override
 	public InterestResponseDto showInterest(InterestRequestDto interestRequestDto) throws UserNotFoundException {
 		Optional<User> sender = userRepository.findById(interestRequestDto.getFromUserId());
 		Optional<User> receiver = userRepository.findById(interestRequestDto.getToUserId());
@@ -118,11 +126,12 @@ public class UserInterestServiceImpl implements UserInterestService {
 		return interestResponseDto;
 
 	}
+
 	/**
 	 * This method is used to get the interested users along with their details
 	 * 
-	 * Here By passing the userId the interested users who are interested to accept the request are listed
-	 * This method returns the  list of interested users 
+	 * Here By passing the userId the interested users who are interested to accept
+	 * the request are listed This method returns the list of interested users
 	 * RequestNotRaisedException occurs when request is not raised by the user
 	 */
 
@@ -143,9 +152,10 @@ public class UserInterestServiceImpl implements UserInterestService {
 		}
 
 	}
+
 	/**
-	 * This method is used to accept or deny the request 
-	 * userAcceptanceRequestDto includes fromUserId,toUserId,statuscode
+	 * This method is used to accept or deny the request userAcceptanceRequestDto
+	 * includes fromUserId,toUserId,statuscode
 	 * 
 	 * This method returns the message as rejected or accepted
 	 * 

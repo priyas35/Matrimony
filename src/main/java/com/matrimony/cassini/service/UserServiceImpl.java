@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.matrimony.cassini.constants.Constant;
 import com.matrimony.cassini.dto.LoginRequestDto;
 import com.matrimony.cassini.dto.RegisterResponseDto;
+import com.matrimony.cassini.dto.UserRegistrationRequestDto;
 import com.matrimony.cassini.entity.User;
 import com.matrimony.cassini.exception.UserNotFoundException;
 import com.matrimony.cassini.repository.UserRepository;
@@ -37,9 +38,10 @@ public class UserServiceImpl implements UserService {
 			return user;
 		} else {
 			throw new UserNotFoundException(Constant.USER_NOT_FOUND);
+			
 		}
 
-	}
+	
 	 /**
      * This method has the method saveUser in which the users can register their profile in the 
      * application by entering the user details and saving the user
@@ -48,7 +50,7 @@ public class UserServiceImpl implements UserService {
      */
 
 	@Override
-	public RegisterResponseDto saveUser(User user) {
+	public RegisterResponseDto saveUser(UserRegistrationRequestDto userRegistrationRequestDto) {
 		userRepository.save(user);
 		RegisterResponseDto registerResponseDto = new RegisterResponseDto();
 		registerResponseDto.setMessage("success");

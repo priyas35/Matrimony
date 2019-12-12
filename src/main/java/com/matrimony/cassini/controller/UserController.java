@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.matrimony.cassini.dto.LoginRequestDto;
 import com.matrimony.cassini.dto.RegisterResponseDto;
+import com.matrimony.cassini.dto.UserRegistrationRequestDto;
 import com.matrimony.cassini.entity.User;
 import com.matrimony.cassini.exception.UserNotFoundException;
 import com.matrimony.cassini.service.UserService;
@@ -30,13 +31,16 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+
 	/**
 	 * This API is used to login the user
+	 * 
 	 * @param loginRequestDto which includes userName and password
 	 * 
 	 * @return This returns the user details when logged in into the application
 	 * 
-	 * @throws UserNotFoundException This exception occurs when user gives invalid username and password
+	 * @throws UserNotFoundException This exception occurs when user gives invalid
+	 *                               username and password
 	 */
 
 	@PostMapping("login")
@@ -44,15 +48,19 @@ public class UserController {
 			throws UserNotFoundException {
 		return ResponseEntity.ok().body(userService.userLogin(loginRequestDto));
 	}
-    /**
-     * This API has the method saveUser in which the users can register their profile
-     *  
-     * @param user Here user details are given as the responsebody
-     * @return This returns the registerResponseDto which includes statusCode and message
-     */
+
+	/**
+	 * This API has the method saveUser in which the users can register their
+	 * profile
+	 * 
+	 * @param user Here user details are given as the responsebody
+	 * @return This returns the registerResponseDto which includes statusCode and
+	 *         message
+	 */
 	@PostMapping
-	public ResponseEntity<RegisterResponseDto> saveUser(@RequestBody User user) {
-		return ResponseEntity.ok().body(userService.saveUser(user));
+	public ResponseEntity<RegisterResponseDto> saveUser(
+			@RequestBody UserRegistrationRequestDto userRegistrationRequestDto) {
+		return ResponseEntity.ok().body(userService.saveUser(userRegistrationRequestDto));
 	}
 
 }

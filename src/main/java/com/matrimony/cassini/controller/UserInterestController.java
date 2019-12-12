@@ -27,8 +27,9 @@ import com.matrimony.cassini.exception.UserMappingNotFound;
 import com.matrimony.cassini.exception.UserNotFoundException;
 import com.matrimony.cassini.service.UserInterestService;
 
+
 @RestController
-@RequestMapping("/interest")
+@RequestMapping("/interests")
 @CrossOrigin
 public class UserInterestController {
 	
