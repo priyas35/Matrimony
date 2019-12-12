@@ -1,5 +1,9 @@
 package com.matrimony.cassini.controller;
 
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +22,12 @@ import com.matrimony.cassini.service.UserService;
 @CrossOrigin
 public class UserController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	@Autowired
 	UserService userService;
 	
 	@PostMapping("login")
-	public ResponseEntity<User> userLogin(@RequestBody LoginRequestDto loginRequestDto) {
+	public ResponseEntity<Optional<User>> userLogin(@RequestBody LoginRequestDto loginRequestDto) {
 		return ResponseEntity.ok().body(userService.userLogin(loginRequestDto));
 	}
 	

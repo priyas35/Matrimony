@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.matrimony.cassini.constants.Constant;
-import com.matrimony.cassini.dto.InterestRequestDto;
+import com.matrimony.cassini.dto.FilterRequestDto;
 import com.matrimony.cassini.entity.User;
-import com.matrimony.cassini.entity.UserIntrest;
-import com.matrimony.cassini.repository.UserIntrestRepository;
+import com.matrimony.cassini.entity.UserInterest;
+import com.matrimony.cassini.repository.UserInterestRepository;
 import com.matrimony.cassini.repository.UserRepository;
 
 @Service
@@ -22,17 +22,15 @@ public class UserInterestServiceImpl implements UserInterestService {
 	UserRepository userRepository;
 
 	@Autowired
-	UserIntrestRepository userIntrestRepository;
+	UserInterestRepository userInterestRepository;
 
 	@Override
-	public List<User> getAllFilteredUsers(InterestRequestDto interestRequestDto) {
-		Optional<User> user = userRepository.findById(interestRequestDto.getUserId());
+	public List<User> getAllFilteredUsers(FilterRequestDto filterRequestDto) {
+		Optional<User> user = userRepository.findById(filterRequestDto.getUserId());
 		if (user.isPresent()) {
 			List<User> users = userRepository.findByGenderNot(user.get().getGender());
-			users = users.stream()
-					.filter(user1 -> user1.getOccupation().equals(interestRequestDto.getOccupation())
-							&& user1.getReligion().equals(interestRequestDto.getReligion()))
-					.collect(Collectors.toList());
+			users = users.stream().filter(user1 -> user1.getOccupation().equals(filterRequestDto.getOccupation())
+					&& user1.getReligion().equals(filterRequestDto.getReligion())).collect(Collectors.toList());
 			return users;
 		} else {
 			return new ArrayList<>();
@@ -41,16 +39,15 @@ public class UserInterestServiceImpl implements UserInterestService {
 
 	@Override
 	public List<User> acceptedDetails(Integer userId) {
-
-		Optional<User> user = userRepository.findById(userId);
-
-		String Status = Constant.STATUS;
-		List<UserIntrest> uiserMappings = userIntrestRepository.findByFromUserAndStatus(user.get(), Status);
 		List<User> users = new ArrayList<>();
-		for (UserIntrest UserMapping : uiserMappings) {
-			users.add(UserMapping.getToUser());
-		}
+		Optional<User> user = userRepository.findById(userId);
+		if (user.isPresent()) {
+			List<UserInterest> userMappings = userInterestRepository.findByFromUserAndStatus(user.get(),
+					Constant.ACCEPTED);
+			for (UserInterest UserMapping : userMappings) {
+					users.add(UserMapping.getToUser());
+				}
+			}
 		return users;
 	}
-
 }

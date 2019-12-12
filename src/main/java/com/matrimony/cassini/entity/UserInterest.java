@@ -18,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @SequenceGenerator(name = "mapId", allocationSize = 1)
-public class UserIntrest {
+public class UserInterest {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mapId")
