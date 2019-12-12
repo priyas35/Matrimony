@@ -41,6 +41,9 @@ public class UserInterestServiceImpl implements UserInterestService {
 						.filter(user1 -> !(user1.getUserId().equals(userInterest.getFromUser().getUserId())))
 						.collect(Collectors.toList());
 			}
+			users = users.stream().filter(user1 -> user1.getOccupation().equals(filterRequestDto.getOccupation())
+					&& user1.getReligion().equals(filterRequestDto.getReligion())).collect(Collectors.toList());
+
 			if (filterRequestDto.getOccupation() != null) {
 				users = users.stream().filter(user1 -> user1.getOccupation().equals(filterRequestDto.getOccupation()))
 						.collect(Collectors.toList());
@@ -62,14 +65,14 @@ public class UserInterestServiceImpl implements UserInterestService {
 
 	@Override
 	public List<User> acceptedDetails(Integer userId) {
-
-		Optional<User> user = userRepository.findById(userId);
-
-		String Status = Constant.STATUS;
-		List<UserInterest> uiserMappings = userInterestRepository.findByFromUserAndStatus(user.get(), Status);
 		List<User> users = new ArrayList<>();
-		for (UserInterest UserMapping : uiserMappings) {
-			users.add(UserMapping.getToUser());
+		Optional<User> user = userRepository.findById(userId);
+		if (user.isPresent()) {
+			List<UserInterest> userMappings = userInterestRepository.findByFromUserAndStatus(user.get(),
+					Constant.ACCEPTED);
+			for (UserInterest UserMapping : userMappings) {
+				users.add(UserMapping.getToUser());
+			}
 		}
 		return users;
 	}

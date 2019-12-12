@@ -9,7 +9,7 @@ public class UserNotFoundException extends Exception {
 	/**
 	 * @param arg0
 	 */
-	public UserNotFoundException(String arg0) {
-		super(arg0);
+	public UserNotFoundException(String msg) {
+		super(msg);
 	}
 }

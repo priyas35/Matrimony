@@ -14,10 +14,10 @@ public interface UserInterestRepository extends JpaRepository<UserInterest, Inte
 
 	List<UserInterest> findByFromUserAndStatus(User fromUser, String status);
 
-	List<UserInterest> findAllUserMappingsByToUserAndStatus(Optional<User> toUser, String status);
+	List<UserInterest> findAllUserMappingsByToUserAndStatus(Optional<User> currentuser, String requested);
 
 	Optional<UserInterest> findByFromUserAndToUser(User fromUser, User toUser);
-	
+
 	List<UserInterest> findByToUser(User user);
 
 }
