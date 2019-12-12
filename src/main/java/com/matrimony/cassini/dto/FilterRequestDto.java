@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import lombok.Getter;
 import lombok.Setter;
-
+	
 @Getter
 @Setter
 public class FilterRequestDto {
@@ -13,5 +13,7 @@ public class FilterRequestDto {
 	private String occupation;
 	private String religion;
 	private LocalDate dateOfBirth;
+	private Integer fromUserId;
+	private Integer toUserId;
 
 }

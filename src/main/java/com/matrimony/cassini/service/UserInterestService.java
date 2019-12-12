@@ -13,15 +13,16 @@ import com.matrimony.cassini.exception.UserMappingNotFound;
 import com.matrimony.cassini.exception.UserNotFoundException;
 
 public interface UserInterestService {
-
+	
 	List<User> getAllFilteredUsers(FilterRequestDto filterRequestDto);
 
 	List<User> acceptedDetails(Integer userId);
 
-	InterestResponseDto showInterest(InterestRequestDto interestRequestDto) throws UserNotFoundException;
 
 	List<Optional<User>> requestList(Integer userId) throws RequestNotRaisedException;
 
 	String userResponse(UserAcceptanceRequestDto userAcceptanceRequestDto) throws UserMappingNotFound;
+
+	InterestResponseDto showInterest(InterestRequestDto interestRequestDto) throws UserNotFoundException;
 
 }

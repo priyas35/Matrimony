@@ -62,14 +62,14 @@ public class UserInterestServiceImpl implements UserInterestService {
 
 	@Override
 	public List<User> acceptedDetails(Integer userId) {
-
-		Optional<User> user = userRepository.findById(userId);
-
-		String Status = Constant.STATUS;
-		List<UserInterest> uiserMappings = userInterestRepository.findByFromUserAndStatus(user.get(), Status);
 		List<User> users = new ArrayList<>();
-		for (UserInterest UserMapping : uiserMappings) {
-			users.add(UserMapping.getToUser());
+		Optional<User> user = userRepository.findById(userId);
+		if (user.isPresent()) {
+			List<UserInterest> userMappings = userInterestRepository.findByFromUserAndStatus(user.get(),
+					Constant.ACCEPTED);
+			for (UserInterest UserMapping : userMappings) {
+				users.add(UserMapping.getToUser());
+			}
 		}
 		return users;
 	}
