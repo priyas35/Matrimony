@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.matrimony.cassini.dto.LoginRequestDto;
 import com.matrimony.cassini.entity.User;
+import com.matrimony.cassini.exception.UserNotFoundException;
 import com.matrimony.cassini.service.UserServiceImpl;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
@@ -29,7 +30,7 @@ public class UserControllerTest {
 	User user = null;
 
 	@Test
-	public void testUserLogin() {
+	public void testUserLogin() throws UserNotFoundException {
 		loginRequestDto = new LoginRequestDto();
 		loginRequestDto.setUserName("yoga");
 		loginRequestDto.setPassword("india");

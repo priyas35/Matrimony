@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.matrimony.cassini.dto.LoginRequestDto;
+import com.matrimony.cassini.dto.RegisterResponseDto;
 import com.matrimony.cassini.entity.User;
+import com.matrimony.cassini.exception.UserNotFoundException;
 import com.matrimony.cassini.service.UserService;
 
 @RestController
@@ -27,14 +29,13 @@ public class UserController {
 	UserService userService;
 	
 	@PostMapping("login")
-	public ResponseEntity<Optional<User>> userLogin(@RequestBody LoginRequestDto loginRequestDto) {
+	public ResponseEntity<Optional<User>> userLogin(@RequestBody LoginRequestDto loginRequestDto) throws UserNotFoundException {
 		return ResponseEntity.ok().body(userService.userLogin(loginRequestDto));
 	}
 	
 	@PostMapping
-	public ResponseEntity<String> saveUser(@RequestBody User user){
-		String result =userService.saveUser(user);
-		return new ResponseEntity<>(result,HttpStatus.CREATED);
+	public ResponseEntity<RegisterResponseDto> saveUser(@RequestBody User user){
+		return ResponseEntity.ok().body(userService.saveUser(user));
 	}
 
 }

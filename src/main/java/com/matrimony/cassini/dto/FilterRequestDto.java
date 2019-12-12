@@ -4,13 +4,16 @@ import java.time.LocalDate;
 
 import lombok.Getter;
 import lombok.Setter;
-
-@Setter@Getter
+	
+@Getter
+@Setter
 public class FilterRequestDto {
 	
 	private Integer userId;
 	private String occupation;
 	private String religion;
 	private LocalDate dateOfBirth;
+	private Integer fromUserId;
+	private Integer toUserId;
 
 }

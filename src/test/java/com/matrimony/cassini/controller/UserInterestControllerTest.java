@@ -18,13 +18,13 @@ import com.matrimony.cassini.entity.User;
 import com.matrimony.cassini.service.UserInterestServiceImpl;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
-public class UserMappingControllerTest {
+public class UserInterestControllerTest {
 
 	@Mock
 	private UserInterestServiceImpl userInterestServiceImpl;
 	
 	@InjectMocks
-	private UserInteresetController userInteresetController;
+	private UserInterestController userInterestController;
 	
 	User user = null;
 	List<User> userlist = null;
@@ -46,7 +46,7 @@ public class UserMappingControllerTest {
 		user.setReligion("hind");
 		userlist.add(user);
 		Mockito.when(userInterestServiceImpl.acceptedDetails(1)).thenReturn(userlist);
-		ResponseEntity<List<User>> users = userInteresetController.acceptedDetails(1);
+		ResponseEntity<List<User>> users = userInterestController.acceptedDetails(1);
 		assertNotNull(users);
 	}
 }

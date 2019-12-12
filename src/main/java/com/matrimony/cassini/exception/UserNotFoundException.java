@@ -1,6 +1,6 @@
 package com.matrimony.cassini.exception;
 
-public class UserNotFoundException extends RuntimeException {
+public class UserNotFoundException extends Exception {
 	/**
 	 * default serialVersionUID
 	 */
@@ -9,7 +9,7 @@ public class UserNotFoundException extends RuntimeException {
 	/**
 	 * @param arg0
 	 */
-	public UserNotFoundException(String arg0) {
-		super(arg0);
+	public UserNotFoundException(String msg) {
+		super(msg);
 	}
 }

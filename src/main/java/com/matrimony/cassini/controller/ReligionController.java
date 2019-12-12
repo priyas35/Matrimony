@@ -21,7 +21,7 @@ public class ReligionController {
 	ReligionService religionService;
 
 	@GetMapping
-	public ResponseEntity<List<Religion>> getOccupations() {
+	public ResponseEntity<List<Religion>> getReligions() {
 		return ResponseEntity.ok().body(religionService.getReligions());
 	}
 

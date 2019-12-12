@@ -13,6 +13,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.matrimony.cassini.dto.LoginRequestDto;
 import com.matrimony.cassini.entity.User;
+import com.matrimony.cassini.exception.UserNotFoundException;
 import com.matrimony.cassini.repository.UserRepository;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
@@ -28,7 +29,7 @@ public class UserServiceTest {
 	User user = null;
 
 	@Test
-	public void testuserLogin() {
+	public void testuserLogin() throws UserNotFoundException {
 		loginRequestDto = new LoginRequestDto();
 		loginRequestDto.setUserName("yoga");
 		loginRequestDto.setPassword("india");
