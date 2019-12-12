@@ -10,9 +10,15 @@ import com.matrimony.cassini.repository.ReligionRepository;
 
 @Service
 public class ReligionServiceImpl implements ReligionService {
+	/**
+	 * This will inject all the implementations in the religionRepository
+	 */
 
 	@Autowired
 	ReligionRepository religionRepository;
+	/**
+	 * This method is used to get the list of reigion
+	 */
 
 	@Override
 	public List<Religion> getReligions() {

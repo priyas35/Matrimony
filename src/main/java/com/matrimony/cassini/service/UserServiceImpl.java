@@ -14,9 +14,20 @@ import com.matrimony.cassini.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
+	/**
+	 * This will inject all the implmentations in the userRepository
+	 */
 
 	@Autowired
 	private UserRepository userRepository;
+	/**
+	 * This method is used to login the user
+	 * loginRequestDto includes userName and password
+	 * 
+	 * This method returns the user details when logged in into the application
+	 * 
+	 * UserNotFoundException exception occurs when user gives invalid username and password
+	 */
 
 	@Override
 	public Optional<User> userLogin(LoginRequestDto loginRequestDto) throws UserNotFoundException {
@@ -29,6 +40,12 @@ public class UserServiceImpl implements UserService {
 		}
 
 	}
+	 /**
+     * This method has the method saveUser in which the users can register their profile in the 
+     * application by entering the user details and saving the user
+     * 
+     * This method returns the registerResponseDto which includes statusCode and message
+     */
 
 	@Override
 	public RegisterResponseDto saveUser(User user) {

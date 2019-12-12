@@ -23,12 +23,23 @@ import com.matrimony.cassini.repository.UserRepository;
 
 @Service
 public class UserInterestServiceImpl implements UserInterestService {
+	/**
+	 * This will inject all the implementations in the userRepository
+	 */
 
 	@Autowired
 	UserRepository userRepository;
+	/**
+	 * This will inject all the implementations in the userInterestRepository
+	 */
 
 	@Autowired
 	UserInterestRepository userInterestRepository;
+	/**
+	 * This API is used to get the users while searching the opposite sex users
+	 * filterRequestdto includes userID,occupation,religion,dateOfBirth 
+	 * This returns the users as per the requirements after filtering occupation,dateOfBirth and religion
+	 */
 
 	@Override
 	public List<User> getAllFilteredUsers(FilterRequestDto filterRequestDto) {
@@ -56,6 +67,11 @@ public class UserInterestServiceImpl implements UserInterestService {
 			return new ArrayList<>();
 		}
 	}
+	/**
+	 * Here by passing the userId the users who accepted the request their details could be 
+	 * listed by finding the sender and their status
+	 * 
+	 */
 
 	@Override
 	public List<User> acceptedDetails(Integer userId) {
@@ -65,12 +81,22 @@ public class UserInterestServiceImpl implements UserInterestService {
 			List<UserInterest> userMappings = userInterestRepository.findByFromUserAndStatus(user.get(),
 					Constant.ACCEPTED);
 			for (UserInterest UserMapping : userMappings) {
-					users.add(UserMapping.getToUser());
-				}
+				users.add(UserMapping.getToUser());
 			}
+		}
 		return users;
 	}
-
+	/**
+	 * This method is used to  send the request or show interest to opposite 
+	 * user with the message request sent successfully
+	 * 
+	 * interestRequestDto contains fromUserId and toUserId in which the request 
+	 * sent from one user to other user 
+	 * 
+	 * This method returns the interestResponseDto which contains statuscode and message
+	 * UserNotFoundException occurs when toUserId is not found 
+	 * while sending the request or showing interest
+	 */
 
 	public InterestResponseDto showInterest(InterestRequestDto interestRequestDto) throws UserNotFoundException {
 		Optional<User> sender = userRepository.findById(interestRequestDto.getFromUserId());
@@ -92,7 +118,14 @@ public class UserInterestServiceImpl implements UserInterestService {
 		return interestResponseDto;
 
 	}
-	
+	/**
+	 * This method is used to get the interested users along with their details
+	 * 
+	 * Here By passing the userId the interested users who are interested to accept the request are listed
+	 * This method returns the  list of interested users 
+	 * RequestNotRaisedException occurs when request is not raised by the user
+	 */
+
 	@Override
 	public List<Optional<User>> requestList(Integer userId) throws RequestNotRaisedException {
 		Optional<User> currentuser = userRepository.findById(userId);
@@ -110,12 +143,22 @@ public class UserInterestServiceImpl implements UserInterestService {
 		}
 
 	}
+	/**
+	 * This method is used to accept or deny the request 
+	 * userAcceptanceRequestDto includes fromUserId,toUserId,statuscode
+	 * 
+	 * This method returns the message as rejected or accepted
+	 * 
+	 * UserMappingNotFound exception occurs when user mapping not found
+	 * RequestNotRaisedException occurs when request is not raised by the user
+	 */
 
 	@Override
 	public String userResponse(UserAcceptanceRequestDto userAcceptanceRequestDto) throws UserMappingNotFound {
 		Optional<User> fromUser = userRepository.findById(userAcceptanceRequestDto.getFromUserId());
 		Optional<User> toUser = userRepository.findById(userAcceptanceRequestDto.getToUserId());
-		Optional<UserInterest> userMapping = userInterestRepository.findByFromUserAndToUser(toUser.get(), fromUser.get());
+		Optional<UserInterest> userMapping = userInterestRepository.findByFromUserAndToUser(toUser.get(),
+				fromUser.get());
 		if (!userMapping.isPresent()) {
 			throw new UserMappingNotFound(Constant.USER_MAPPING_NOT_FOUND);
 		} else {

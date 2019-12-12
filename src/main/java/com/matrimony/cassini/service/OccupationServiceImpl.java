@@ -10,9 +10,15 @@ import com.matrimony.cassini.repository.OccupationRepository;
 
 @Service
 public class OccupationServiceImpl implements OccupationService {
+	/**
+	 * This will inject all the implementations in occupationRepository
+	 */
 
 	@Autowired
 	OccupationRepository occupationRepository;
+	/**
+	 * This API is used to get the list of occupations
+	 */
 
 	@Override
 	public List<Occupation> getOccupations() {
