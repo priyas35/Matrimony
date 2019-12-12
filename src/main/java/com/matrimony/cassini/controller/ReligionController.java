@@ -18,7 +18,7 @@ import com.matrimony.cassini.service.ReligionService;
 @RequestMapping("/religions")
 @CrossOrigin
 public class ReligionController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(ReligionController.class);
 
 	/**
@@ -35,6 +35,7 @@ public class ReligionController {
 	 */
 	@GetMapping
 	public ResponseEntity<List<Religion>> getReligions() {
+		logger.info("get all religions");
 		return ResponseEntity.ok().body(religionService.getReligions());
 	}
 

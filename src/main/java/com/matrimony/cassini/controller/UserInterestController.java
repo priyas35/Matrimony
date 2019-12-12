@@ -27,15 +27,13 @@ import com.matrimony.cassini.exception.UserMappingNotFound;
 import com.matrimony.cassini.exception.UserNotFoundException;
 import com.matrimony.cassini.service.UserInterestService;
 
-
 @RestController
 @RequestMapping("/interests")
 @CrossOrigin
 public class UserInterestController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(UserInterestController.class);
 
-	
 	/**
 	 * This injects all the implementations in the userInterestService
 	 */
@@ -51,6 +49,7 @@ public class UserInterestController {
 
 	@GetMapping("/{userId}/accepted")
 	public ResponseEntity<List<User>> acceptedDetails(@PathVariable("userId") Integer userId) {
+		logger.info("to get accepted users details");
 		return ResponseEntity.ok().body(userInterestService.acceptedDetails(userId));
 
 	}
@@ -58,58 +57,73 @@ public class UserInterestController {
 	/**
 	 * This API is used to get the users while searching the opposite sex users
 	 * 
-	 * @param filterRequestDto 
-	 * This filterRequestdto includes userID,occupation,religion,dateOfBirth
+	 * @param filterRequestDto This filterRequestdto includes
+	 *                         userID,occupation,religion,dateOfBirth
 	 * 
-	 * @return This returns the users as per the requirements after filtering occupation,dateOfBirth and religion
+	 * @return This returns the users as per the requirements after filtering
+	 *         occupation,dateOfBirth and religion
 	 */
 
 	@PostMapping
 	public ResponseEntity<List<User>> getAllFilteredUsers(@RequestBody FilterRequestDto filterRequestDto) {
+		logger.info("for search in sorting order");
 		return ResponseEntity.ok().body(userInterestService.getAllFilteredUsers(filterRequestDto));
 	}
+
 	/**
-	 * This API is used to  send the request or show interest to opposite 
-	 * user with the message request sent successfully
+	 * This API is used to send the request or show interest to opposite user with
+	 * the message request sent successfully
 	 * 
-	 * @param interestRequestDto This interestRequestDto contains fromUserId and toUserId in which the request 
-	 * sent from one user to other user 
-	 * @return This returns the interestResponseDto which contains statuscode and message
-	 * @throws UserNotFoundException This exception occurs when toUserId is not found 
-	 * while sending the request or showing interest
+	 * @param interestRequestDto This interestRequestDto contains fromUserId and
+	 *                           toUserId in which the request sent from one user to
+	 *                           other user
+	 * @return This returns the interestResponseDto which contains statuscode and
+	 *         message
+	 * @throws UserNotFoundException This exception occurs when toUserId is not
+	 *                               found while sending the request or showing
+	 *                               interest
 	 */
 
 	@PostMapping("/request")
 	public ResponseEntity<InterestResponseDto> showInterest(@RequestBody InterestRequestDto interestRequestDto)
 			throws UserNotFoundException {
+		logger.info("to show interest");
 		return new ResponseEntity<>(userInterestService.showInterest(interestRequestDto), HttpStatus.CREATED);
 
 	}
+
 	/**
 	 * This API is used to get the interested users along with their details
 	 * 
-	 * @param userId Here By passing the userId the interested users who are interested to accept the request are listed
-	 * @return This returns the  list of interested users 
-	 * @throws RequestNotRaisedException This exception occurs when request is not raised by the user
+	 * @param userId Here By passing the userId the interested users who are
+	 *               interested to accept the request are listed
+	 * @return This returns the list of interested users
+	 * @throws RequestNotRaisedException This exception occurs when request is not
+	 *                                   raised by the user
 	 */
 
 	@GetMapping("/{userId}/interest")
 	public ResponseEntity<List<Optional<User>>> getInterestedList(Integer userId) throws RequestNotRaisedException {
+		logger.info("to get interested user list");
 		List<Optional<User>> users = userInterestService.requestList(userId);
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
+
 	/**
-	 * This API is used to accept or deny the request 
+	 * This API is used to accept or deny the request
 	 * 
 	 * @param userAcceptanceRequestDto includes fromUserId,toUserId,statuscode
 	 * @return This returns the message as rejected or accepted
-	 * @throws UserMappingNotFound This exception occurs when user mapping not found
-	 * @throws RequestNotRaisedException This exception occurs when request is not raised by the user
+	 * @throws UserMappingNotFound       This exception occurs when user mapping not
+	 *                                   found
+	 * @throws RequestNotRaisedException This exception occurs when request is not
+	 *                                   raised by the user
 	 */
 
 	@PutMapping
 	public ResponseEntity<String> userResponse(@RequestBody UserAcceptanceRequestDto userAcceptanceRequestDto)
 			throws UserMappingNotFound, RequestNotRaisedException {
+		logger.info("to accept or reject the user");
 		String result = userInterestService.userResponse(userAcceptanceRequestDto);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

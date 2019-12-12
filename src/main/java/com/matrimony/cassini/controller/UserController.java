@@ -46,6 +46,7 @@ public class UserController {
 	@PostMapping("login")
 	public ResponseEntity<Optional<User>> userLogin(@RequestBody LoginRequestDto loginRequestDto)
 			throws UserNotFoundException {
+		logger.info("for login");
 		return ResponseEntity.ok().body(userService.userLogin(loginRequestDto));
 	}
 
@@ -60,6 +61,7 @@ public class UserController {
 	@PostMapping
 	public ResponseEntity<RegisterResponseDto> saveUser(
 			@RequestBody UserRegistrationRequestDto userRegistrationRequestDto) {
+		logger.info("to register the profile");
 		return ResponseEntity.ok().body(userService.saveUser(userRegistrationRequestDto));
 	}
 

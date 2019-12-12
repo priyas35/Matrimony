@@ -18,13 +18,13 @@ import com.matrimony.cassini.dto.RegisterResponseDto;
 import com.matrimony.cassini.dto.UserRegistrationRequestDto;
 import com.matrimony.cassini.entity.User;
 import com.matrimony.cassini.exception.UserNotFoundException;
-import com.matrimony.cassini.service.UserServiceImpl;
+import com.matrimony.cassini.service.UserService;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
 public class UserControllerTest {
 
 	@Mock
-	private UserServiceImpl userServiceImpl;
+	private UserService userServiceImpl;
 
 	@InjectMocks
 	private UserController userController;

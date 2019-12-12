@@ -18,22 +18,25 @@ import com.matrimony.cassini.service.OccupationService;
 @RequestMapping("/occupations")
 @CrossOrigin
 public class OccupationController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(OccupationController.class);
-	
+
 	/**
 	 * This will inject all the implementations in the occupationService
 	 */
 
 	@Autowired
 	OccupationService occupationService;
+
 	/**
 	 * This API is used to get the list of occupations
+	 * 
 	 * @return This returns the occupation list
 	 */
 
 	@GetMapping
 	public ResponseEntity<List<Occupation>> getOccupations() {
+		logger.info("get all occupations");
 		return ResponseEntity.ok().body(occupationService.getOccupations());
 	}
 

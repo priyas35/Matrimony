@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserRegistrationRequestDto {
-	
+
 	private String fullName;
 	private LocalDate dateOfBirth;
 	private String gender;

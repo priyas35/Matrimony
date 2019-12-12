@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.matrimony.cassini.constants.Constant;
+import com.matrimony.cassini.controller.UserInterestController;
 import com.matrimony.cassini.dto.FilterRequestDto;
 import com.matrimony.cassini.dto.InterestRequestDto;
 import com.matrimony.cassini.dto.InterestResponseDto;
@@ -23,6 +26,7 @@ import com.matrimony.cassini.repository.UserRepository;
 
 @Service
 public class UserInterestServiceImpl implements UserInterestService {
+	private static final Logger logger = LoggerFactory.getLogger(UserInterestController.class);
 	/**
 	 * This will inject all the implementations in the userRepository
 	 */
@@ -45,6 +49,7 @@ public class UserInterestServiceImpl implements UserInterestService {
 
 	@Override
 	public List<User> getAllFilteredUsers(FilterRequestDto filterRequestDto) {
+		logger.info("to get filtered user");
 		Optional<User> user = userRepository.findById(filterRequestDto.getUserId());
 		if (user.isPresent()) {
 			List<User> users = userRepository.findByGenderNot(user.get().getGender());
@@ -81,6 +86,7 @@ public class UserInterestServiceImpl implements UserInterestService {
 
 	@Override
 	public List<User> acceptedDetails(Integer userId) {
+		logger.info("to get accepted user details");
 		List<User> users = new ArrayList<>();
 		Optional<User> user = userRepository.findById(userId);
 		if (user.isPresent()) {
@@ -107,6 +113,7 @@ public class UserInterestServiceImpl implements UserInterestService {
 
 	@Override
 	public InterestResponseDto showInterest(InterestRequestDto interestRequestDto) throws UserNotFoundException {
+		logger.info("to show interest on user");
 		Optional<User> sender = userRepository.findById(interestRequestDto.getFromUserId());
 		Optional<User> receiver = userRepository.findById(interestRequestDto.getToUserId());
 		if (!sender.isPresent()) {
@@ -137,6 +144,7 @@ public class UserInterestServiceImpl implements UserInterestService {
 
 	@Override
 	public List<Optional<User>> requestList(Integer userId) throws RequestNotRaisedException {
+		logger.info("to get the requested user");
 		Optional<User> currentuser = userRepository.findById(userId);
 		List<UserInterest> userInterests = userInterestRepository.findAllUserMappingsByToUserAndStatus(currentuser,
 				Constant.REQUESTED);
@@ -165,6 +173,7 @@ public class UserInterestServiceImpl implements UserInterestService {
 
 	@Override
 	public String userResponse(UserAcceptanceRequestDto userAcceptanceRequestDto) throws UserMappingNotFound {
+		logger.info("to get accepted user details");
 		Optional<User> fromUser = userRepository.findById(userAcceptanceRequestDto.getFromUserId());
 		Optional<User> toUser = userRepository.findById(userAcceptanceRequestDto.getToUserId());
 		Optional<UserInterest> userMapping = userInterestRepository.findByFromUserAndToUser(toUser.get(),

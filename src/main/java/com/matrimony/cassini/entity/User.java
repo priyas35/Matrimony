@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 @SequenceGenerator(name = "userId", allocationSize = 1)
 public class User {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userId")
 	private Integer userId;
@@ -32,6 +32,5 @@ public class User {
 	private String motherTongue;
 	private String userName;
 	private String password;
-	
 
 }
