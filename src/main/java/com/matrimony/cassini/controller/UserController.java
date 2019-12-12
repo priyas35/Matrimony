@@ -23,7 +23,7 @@ public class UserController {
 	@PostMapping
 	public ResponseEntity<String> saveUser(@RequestBody User user){
 		String result =userService.saveUser(user);
-		return new ResponseEntity<>(result,HttpStatus.OK);
+		return new ResponseEntity<>(result,HttpStatus.CREATED);
 	}
 
 }

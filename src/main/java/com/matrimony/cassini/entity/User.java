@@ -26,7 +26,8 @@ public class User {
 	private Double height;
 	private String occupation;
 	private String qualification;
-	private String homeTown;
+	private String city;
+	private String email;
 	private String religion;
 	private String motherTongue;
 	private String userName;

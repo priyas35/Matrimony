@@ -1,5 +1,7 @@
 package com.matrimony.cassini.entity;
 
+import java.time.LocalDate;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @SequenceGenerator(name = "mapId", allocationSize = 1)
-public class UserMapping {
+public class UserIntrest {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mapId")
@@ -28,5 +30,6 @@ public class UserMapping {
 	@JoinColumn(name = "to_user_id")
 	private User toUser;
 	private String status;
+	private LocalDate date;
 
 }

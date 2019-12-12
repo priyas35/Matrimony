@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.matrimony.cassini.dto.InterestRequestDto;
 import com.matrimony.cassini.entity.User;
-import com.matrimony.cassini.repository.UserMappingRepository;
+import com.matrimony.cassini.repository.UserIntrestRepository;
 import com.matrimony.cassini.repository.UserRepository;
 
 @Service
@@ -20,7 +20,7 @@ public class UserInterestServiceImpl implements UserInterestService {
 	UserRepository userRepository;
 
 	@Autowired
-	UserMappingRepository userMappingRepository;
+	UserIntrestRepository userIntrestRepository;
 
 	@Override
 	public List<User> getAllFilteredUsers(InterestRequestDto interestRequestDto) {
