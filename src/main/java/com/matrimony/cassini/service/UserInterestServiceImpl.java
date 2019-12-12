@@ -29,10 +29,20 @@ public class UserInterestServiceImpl implements UserInterestService {
 		Optional<User> user = userRepository.findById(interestRequestDto.getUserId());
 		if (user.isPresent()) {
 			List<User> users = userRepository.findByGenderNot(user.get().getGender());
-			users = users.stream()
-					.filter(user1 -> user1.getOccupation().equals(interestRequestDto.getOccupation())
-							&& user1.getReligion().equals(interestRequestDto.getReligion()))
-					.collect(Collectors.toList());
+
+			if (interestRequestDto.getOccupation() != null) {
+				users = users.stream().filter(user1 -> user1.getOccupation().equals(interestRequestDto.getOccupation()))
+						.collect(Collectors.toList());
+			}
+			if (interestRequestDto.getReligion() != null) {
+				users = users.stream().filter(user1 -> user1.getReligion().equals(interestRequestDto.getReligion()))
+						.collect(Collectors.toList());
+			}
+			if (interestRequestDto.getDateOfBirth() != null) {
+				users = users.stream()
+						.filter(user1 -> user1.getDateOfBirth().isAfter(interestRequestDto.getDateOfBirth()))
+						.collect(Collectors.toList());
+			}
 			return users;
 		} else {
 			return new ArrayList<>();
