@@ -12,6 +12,7 @@ public interface UserService {
 
 	public RegisterResponseDto saveUser(UserRegistrationRequestDto userRegistrationRequestDto);
 
-	public Optional<User> userLogin(LoginRequestDto loginRequestDto) throws UserNotFoundException;
+	Optional<User> userLogin(LoginRequestDto loginRequestDto) throws UserNotFoundException;
+
 
 }

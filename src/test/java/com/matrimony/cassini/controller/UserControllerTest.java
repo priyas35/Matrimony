@@ -46,9 +46,10 @@ public class UserControllerTest {
 		assertNotNull(user);
 
 	}
+
 	@Test
-	public void testSaveUser()  {
-		UserRegistrationRequestDto	userRegistrationRequestDto = new UserRegistrationRequestDto();
+	public void testSaveUser() {
+		UserRegistrationRequestDto userRegistrationRequestDto = new UserRegistrationRequestDto();
 		userRegistrationRequestDto.setCity("bng");
 		userRegistrationRequestDto.setDateOfBirth(LocalDate.now());
 		userRegistrationRequestDto.setEmail("yoga@gmail.com");
@@ -61,13 +62,13 @@ public class UserControllerTest {
 		userRegistrationRequestDto.setOccupation("doc");
 		userRegistrationRequestDto.setReligion("hind");
 		userRegistrationRequestDto.setQualification("bt");
-		
+
 		RegisterResponseDto registerResponseDto = new RegisterResponseDto();
 		registerResponseDto.setMessage("success");
 		registerResponseDto.setStatusCode(200);
-		
-		Mockito.when(userServiceImpl.saveUser(user)).thenReturn(registerResponseDto);
-		ResponseEntity<Optional<User>> user = userController.saveUser(user)
+
+		Mockito.when(userServiceImpl.saveUser(userRegistrationRequestDto)).thenReturn(registerResponseDto);
+		ResponseEntity<RegisterResponseDto> user = userController.saveUser(userRegistrationRequestDto);
 		assertNotNull(user);
 
 	}

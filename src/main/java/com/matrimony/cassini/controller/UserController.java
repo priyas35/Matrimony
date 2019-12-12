@@ -23,18 +23,20 @@ import com.matrimony.cassini.service.UserService;
 @RequestMapping("/users")
 @CrossOrigin
 public class UserController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	@Autowired
 	UserService userService;
-	
+
 	@PostMapping("login")
-	public ResponseEntity<Optional<User>> userLogin(@RequestBody LoginRequestDto loginRequestDto) throws UserNotFoundException {
+	public ResponseEntity<Optional<User>> userLogin(@RequestBody LoginRequestDto loginRequestDto)
+			throws UserNotFoundException {
 		return ResponseEntity.ok().body(userService.userLogin(loginRequestDto));
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<RegisterResponseDto> saveUser(@RequestBody UserRegistrationRequestDto userRegistrationRequestDto){
+	public ResponseEntity<RegisterResponseDto> saveUser(
+			@RequestBody UserRegistrationRequestDto userRegistrationRequestDto) {
 		return ResponseEntity.ok().body(userService.saveUser(userRegistrationRequestDto));
 	}
 
