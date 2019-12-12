@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/usermappings")
+@RequestMapping("/interestedprofiles")
 @CrossOrigin
-public class UserMappingController {
+public class UserIntersetController {
 
 }

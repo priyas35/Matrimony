@@ -8,13 +8,13 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.matrimony.cassini.dto.GetUsersRequestDto;
+import com.matrimony.cassini.dto.InterestRequestDto;
 import com.matrimony.cassini.entity.User;
 import com.matrimony.cassini.repository.UserMappingRepository;
 import com.matrimony.cassini.repository.UserRepository;
 
 @Service
-public class UserMappingServiceImpl implements UserMappingService {
+public class UserInterestServiceImpl implements UserInterestService {
 
 	@Autowired
 	UserRepository userRepository;
@@ -23,12 +23,12 @@ public class UserMappingServiceImpl implements UserMappingService {
 	UserMappingRepository userMappingRepository;
 
 	@Override
-	public List<User> getAllFilteredUsers(GetUsersRequestDto getUsersRequestDto) {
-		Optional<User> user = userRepository.findById(getUsersRequestDto.getUserId());
+	public List<User> getAllFilteredUsers(InterestRequestDto interestRequestDto) {
+		Optional<User> user = userRepository.findById(interestRequestDto.getUserId());
 		if(user.isPresent()) {
 		List<User> users = userRepository.findByGenderNot(user.get().getGender());
-		users = users.stream().filter(user1 -> user1.getOccupation().equals(getUsersRequestDto.getOccupation())
-				&& user1.getReligion().equals(getUsersRequestDto.getReligion())).collect(Collectors.toList());
+		users = users.stream().filter(user1 -> user1.getOccupation().equals(interestRequestDto.getOccupation())
+				&& user1.getReligion().equals(interestRequestDto.getReligion())).collect(Collectors.toList());
 		return users;
 		}else {
 			return new ArrayList<>();
