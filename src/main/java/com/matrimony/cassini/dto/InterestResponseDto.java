@@ -5,9 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class InterestRequestDto {
+public class InterestResponseDto {
 	
-	private Integer fromUserId;
-	private Integer toUserId;
+	private String message;
+	private Integer statusCode;
 
 }

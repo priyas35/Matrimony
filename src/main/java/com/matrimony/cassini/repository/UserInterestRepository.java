@@ -6,11 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.matrimony.cassini.entity.User;
-import com.matrimony.cassini.entity.UserIntrest;
+import com.matrimony.cassini.entity.UserInterest;
 
 @Repository
-public interface UserIntrestRepository extends JpaRepository<UserIntrest, Integer> {
+public interface UserInterestRepository extends JpaRepository<UserInterest, Integer> {
 	
-	List<UserIntrest> findByFromUserAndStatus(User fromUser, String status);
+	List<UserInterest> findByFromUserAndStatus(User fromUser, String status);
 
 }

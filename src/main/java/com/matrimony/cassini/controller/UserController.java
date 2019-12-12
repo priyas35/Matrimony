@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.matrimony.cassini.dto.LoginRequestDto;
+import com.matrimony.cassini.dto.RegisterResponseDto;
 import com.matrimony.cassini.entity.User;
 import com.matrimony.cassini.service.UserService;
 
@@ -27,9 +28,8 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<String> saveUser(@RequestBody User user){
-		String result =userService.saveUser(user);
-		return new ResponseEntity<>(result,HttpStatus.CREATED);
+	public ResponseEntity<RegisterResponseDto> saveUser(@RequestBody User user){
+		return ResponseEntity.ok().body(userService.saveUser(user));
 	}
 
 }

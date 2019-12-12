@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.matrimony.cassini.dto.LoginRequestDto;
-import com.matrimony.cassini.constants.Constant;
+import com.matrimony.cassini.dto.RegisterResponseDto;
 import com.matrimony.cassini.entity.User;
 import com.matrimony.cassini.repository.UserRepository;
 
@@ -23,9 +23,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String saveUser(User user) {
+	public RegisterResponseDto saveUser(User user) {
 		userRepository.save(user);
-		return Constant.REGISTRATION_SUCCESSFUL;
+		RegisterResponseDto registerResponseDto = new RegisterResponseDto();
+		registerResponseDto.setMessage("success");
+		registerResponseDto.setStatusCode(200);
+		return registerResponseDto;
 	}
 
 }
