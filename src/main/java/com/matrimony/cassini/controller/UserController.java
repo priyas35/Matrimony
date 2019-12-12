@@ -25,8 +25,23 @@ import com.matrimony.cassini.service.UserService;
 public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	/**
+	 * This will inject all the implementations in the userservice
+	 */
+
 	@Autowired
 	UserService userService;
+
+	/**
+	 * This API is used to login the user
+	 * 
+	 * @param loginRequestDto which includes userName and password
+	 * 
+	 * @return This returns the user details when logged in into the application
+	 * 
+	 * @throws UserNotFoundException This exception occurs when user gives invalid
+	 *                               username and password
+	 */
 
 	@PostMapping("login")
 	public ResponseEntity<Optional<User>> userLogin(@RequestBody LoginRequestDto loginRequestDto)
@@ -35,10 +50,18 @@ public class UserController {
 		return ResponseEntity.ok().body(userService.userLogin(loginRequestDto));
 	}
 
+	/**
+	 * This API has the method saveUser in which the users can register their
+	 * profile
+	 * 
+	 * @param user Here user details are given as the responsebody
+	 * @return This returns the registerResponseDto which includes statusCode and
+	 *         message
+	 */
 	@PostMapping
 	public ResponseEntity<RegisterResponseDto> saveUser(
 			@RequestBody UserRegistrationRequestDto userRegistrationRequestDto) {
-		logger.info("to save user");
+		logger.info("to register the profile");
 		return ResponseEntity.ok().body(userService.saveUser(userRegistrationRequestDto));
 	}
 

@@ -2,6 +2,8 @@ package com.matrimony.cassini.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,11 +19,23 @@ import com.matrimony.cassini.service.ReligionService;
 @CrossOrigin
 public class ReligionController {
 
+	private static final Logger logger = LoggerFactory.getLogger(ReligionController.class);
+
+	/**
+	 * This will inject all the implementations in the religionService
+	 */
+
 	@Autowired
 	ReligionService religionService;
 
+	/**
+	 * This API is used to get the list of religion
+	 * 
+	 * @return This returns the religion list
+	 */
 	@GetMapping
 	public ResponseEntity<List<Religion>> getReligions() {
+		logger.info("get all religions");
 		return ResponseEntity.ok().body(religionService.getReligions());
 	}
 

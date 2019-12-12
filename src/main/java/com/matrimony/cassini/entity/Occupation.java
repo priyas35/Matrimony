@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Occupation {
-	
+
 	@Id
 	private Integer occupationId;
 	private String occupationName;

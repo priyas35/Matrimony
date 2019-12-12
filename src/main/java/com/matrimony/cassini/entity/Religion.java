@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Religion {
-	
+
 	@Id
 	private Integer religionId;
 	private String religionName;

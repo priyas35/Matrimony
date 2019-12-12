@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.matrimony.cassini.entity.Religion;
 
 @Repository
-public interface ReligionRepository extends JpaRepository<Religion, Integer>{
+public interface ReligionRepository extends JpaRepository<Religion, Integer> {
 
 }

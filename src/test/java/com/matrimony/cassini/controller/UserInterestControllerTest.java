@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -15,17 +16,19 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
 
 import com.matrimony.cassini.dto.FilterRequestDto;
+import com.matrimony.cassini.dto.InterestRequestDto;
+import com.matrimony.cassini.dto.InterestResponseDto;
 import com.matrimony.cassini.entity.User;
+import com.matrimony.cassini.exception.UserNotFoundException;
 import com.matrimony.cassini.service.UserInterestService;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
 public class UserInterestControllerTest {
 
-	@Mock
-	private UserInterestService userInterestService;
-
 	@InjectMocks
-	private UserInterestController userInterestController;
+	UserInterestController userInterestController;
+	@Mock
+	UserInterestService userInterestService;
 
 	User user = null;
 	List<User> userlist = null;
@@ -56,5 +59,15 @@ public class UserInterestControllerTest {
 	public void getAllFilteredUsersTest() {
 		Mockito.when(userInterestService.getAllFilteredUsers(Mockito.any())).thenReturn(new ArrayList<User>());
 		assertNotNull(userInterestController.getAllFilteredUsers(new FilterRequestDto()));
+	}
+
+	@Test
+	public void testShowInterest() throws UserNotFoundException {
+		InterestRequestDto interestRequestDto = new InterestRequestDto();
+		InterestResponseDto interestResponseDto = new InterestResponseDto();
+		Mockito.when(userInterestService.showInterest(interestRequestDto)).thenReturn(interestResponseDto);
+		ResponseEntity<InterestResponseDto> response = userInterestController.showInterest(interestRequestDto);
+		Assert.assertNotNull(response);
+
 	}
 }
