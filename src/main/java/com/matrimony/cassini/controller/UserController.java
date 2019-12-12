@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.matrimony.cassini.dto.LoginRequestDto;
 import com.matrimony.cassini.dto.RegisterResponseDto;
+import com.matrimony.cassini.dto.UserRegistrationRequestDto;
 import com.matrimony.cassini.entity.User;
 import com.matrimony.cassini.exception.UserNotFoundException;
 import com.matrimony.cassini.service.UserService;
@@ -34,8 +34,8 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<RegisterResponseDto> saveUser(@RequestBody User user){
-		return ResponseEntity.ok().body(userService.saveUser(user));
+	public ResponseEntity<RegisterResponseDto> saveUser(@RequestBody UserRegistrationRequestDto userRegistrationRequestDto){
+		return ResponseEntity.ok().body(userService.saveUser(userRegistrationRequestDto));
 	}
 
 }

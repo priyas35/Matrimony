@@ -52,7 +52,7 @@ public class UserInterestController {
 	}
 	
 	@GetMapping("/{userId}/interest")
-	public ResponseEntity<List<Optional<User>>> getInterestedList(Integer userId) throws RequestNotRaisedException{
+	public ResponseEntity<List<Optional<User>>> getInterestedList(@PathVariable("userId") Integer userId) throws RequestNotRaisedException{
 		List<Optional<User>> users =userInterestService.requestList(userId);
 		return new ResponseEntity<>(users,HttpStatus.OK);
 	}

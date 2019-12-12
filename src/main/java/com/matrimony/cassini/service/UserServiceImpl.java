@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.matrimony.cassini.constants.Constant;
 import com.matrimony.cassini.dto.LoginRequestDto;
 import com.matrimony.cassini.dto.RegisterResponseDto;
+import com.matrimony.cassini.dto.UserRegistrationRequestDto;
 import com.matrimony.cassini.entity.User;
 import com.matrimony.cassini.exception.UserNotFoundException;
 import com.matrimony.cassini.repository.UserRepository;
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public RegisterResponseDto saveUser(User user) {
+	public RegisterResponseDto saveUser(UserRegistrationRequestDto userRegistrationRequestDto) {
 		userRepository.save(user);
 		RegisterResponseDto registerResponseDto = new RegisterResponseDto();
 		registerResponseDto.setMessage("success");

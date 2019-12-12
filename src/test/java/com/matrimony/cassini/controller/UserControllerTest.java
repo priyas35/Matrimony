@@ -2,6 +2,7 @@ package com.matrimony.cassini.controller;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -13,6 +14,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
 
 import com.matrimony.cassini.dto.LoginRequestDto;
+import com.matrimony.cassini.dto.RegisterResponseDto;
+import com.matrimony.cassini.dto.UserRegistrationRequestDto;
 import com.matrimony.cassini.entity.User;
 import com.matrimony.cassini.exception.UserNotFoundException;
 import com.matrimony.cassini.service.UserServiceImpl;
@@ -40,6 +43,31 @@ public class UserControllerTest {
 		user.setPassword("india");
 		Mockito.when(userServiceImpl.userLogin(loginRequestDto)).thenReturn(Optional.of(user));
 		ResponseEntity<Optional<User>> user = userController.userLogin(loginRequestDto);
+		assertNotNull(user);
+
+	}
+	@Test
+	public void testSaveUser()  {
+		UserRegistrationRequestDto	userRegistrationRequestDto = new UserRegistrationRequestDto();
+		userRegistrationRequestDto.setCity("bng");
+		userRegistrationRequestDto.setDateOfBirth(LocalDate.now());
+		userRegistrationRequestDto.setEmail("yoga@gmail.com");
+		userRegistrationRequestDto.setFullName("yoga");
+		userRegistrationRequestDto.setGender("male");
+		userRegistrationRequestDto.setHeight(6.1);
+		userRegistrationRequestDto.setMotherTongue("tel");
+		userRegistrationRequestDto.setPassword("india");
+		userRegistrationRequestDto.setUserName("yogaa");
+		userRegistrationRequestDto.setOccupation("doc");
+		userRegistrationRequestDto.setReligion("hind");
+		userRegistrationRequestDto.setQualification("bt");
+		
+		RegisterResponseDto registerResponseDto = new RegisterResponseDto();
+		registerResponseDto.setMessage("success");
+		registerResponseDto.setStatusCode(200);
+		
+		Mockito.when(userServiceImpl.saveUser(user)).thenReturn(registerResponseDto);
+		ResponseEntity<Optional<User>> user = userController.saveUser(user)
 		assertNotNull(user);
 
 	}
