@@ -184,4 +184,26 @@ public class UserInterestServiceTest {
  	assertNotNull(userInterestServiceImpl.getAllFilteredUsers(new FilterRequestDto()));
  	}
  	
+ 	@Test
+ 	public void requestListTest() throws RequestNotRaisedException {
+ 	List<User> users = new ArrayList<User>();
+ 	User user = new User();
+ 	user.setUserId(1);
+ 	users.add(user);
+ 	List<UserInterest> userInterests = new ArrayList<UserInterest>();
+ 	UserInterest userInterest = new UserInterest();
+ 	userInterest.setFromUser(user);
+ 	userInterest.setToUser(user);
+ 	userInterests.add(userInterest);
+ 	Mockito.when(userRepository.findById(Mockito.any())).thenReturn(Optional.of(user));
+ 	Mockito.when(userInterestRepository.findAllUserMappingsByToUserAndStatus(Mockito.any(), Mockito.any()))
+ 	.thenReturn(new ArrayList<UserInterest>());
+ 	assertNotNull(userInterestServiceImpl.requestList(1));
+ 	Mockito.when(userInterestRepository.findAllUserMappingsByToUserAndStatus(Mockito.any(), Mockito.any()))
+ 	.thenReturn(userInterests);
+ 	Mockito.when(userRepository.findById(Mockito.any())).thenReturn(Optional.of(user));
+ 	assertNotNull(userInterestServiceImpl.requestList(1));
+
+ 	}
+ 	
 }

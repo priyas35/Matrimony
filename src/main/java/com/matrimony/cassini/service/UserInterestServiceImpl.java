@@ -156,7 +156,7 @@ public class UserInterestServiceImpl implements UserInterestService {
 				Constant.REQUESTED);
 		List<Optional<User>> users = new ArrayList<>();
 		if (userInterests.isEmpty()) {
-			throw new RequestNotRaisedException(Constant.REQUEST_NOT_RAISED);
+			return new ArrayList<>();
 		} else {
 			for (UserInterest userInterest : userInterests) {
 				Optional<User> interresteduser = userRepository.findById(userInterest.getFromUser().getUserId());
@@ -175,6 +175,7 @@ public class UserInterestServiceImpl implements UserInterestService {
 	 * 
 	 * UserMappingNotFound exception occurs when user mapping not found
 	 * RequestNotRaisedException occurs when request is not raised by the user
+	 * @throws UserNotFoundException 
 	 */
 
 	@Override
@@ -183,12 +184,10 @@ public class UserInterestServiceImpl implements UserInterestService {
 		logger.info("to get accepted user details");
 		Optional<User> fromUser = userRepository.findById(userAcceptanceRequestDto.getFromUserId());
 		Optional<User> toUser = userRepository.findById(userAcceptanceRequestDto.getToUserId());
-		if (!toUser.isPresent() && fromUser.isPresent()) {
-			throw new UserNotFoundException(Constant.USER_NOT_FOUND);
-		} else {
+
+		if (fromUser.isPresent() && toUser.isPresent()) {
 			Optional<UserInterest> userInterests = userInterestRepository.findByFromUserAndToUser(toUser.get(),
 					fromUser.get());
-
 			if (!userInterests.isPresent()) {
 				throw new RequestNotRaisedException(Constant.REQUEST_NOT_RAISED);
 			} else {
@@ -198,9 +197,9 @@ public class UserInterestServiceImpl implements UserInterestService {
 					userInterestRepository.save(userInterests.get());
 					UserInterest acceptedUserMapping = new UserInterest();
 					acceptedUserMapping
-							.setFromUser(userRepository.findById(userAcceptanceRequestDto.getFromUserId()).get());
+							.setFromUser(fromUser.get());
 					acceptedUserMapping
-							.setToUser(userRepository.findById(userAcceptanceRequestDto.getToUserId()).get());
+							.setToUser(toUser.get());
 					acceptedUserMapping.setStatus(Constant.ACCEPTED);
 					userInterestRepository.save(acceptedUserMapping);
 					return Constant.ACCEPTED;
@@ -209,9 +208,12 @@ public class UserInterestServiceImpl implements UserInterestService {
 					userInterestRepository.save(userInterests.get());
 					return Constant.REJECTED;
 				}
-			}
 
+			}
+		}else {
+			throw new UserNotFoundException(Constant.USER_NOT_FOUND);
 		}
+
 	}
 
 }
