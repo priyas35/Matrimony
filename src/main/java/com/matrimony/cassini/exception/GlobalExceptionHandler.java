@@ -10,17 +10,17 @@ import com.matrimony.cassini.dto.ErrorDto;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-	
+
 	@ExceptionHandler(UserNotFoundException.class)
-	public ResponseEntity<ErrorDto> userNotFoundException(){
+	public ResponseEntity<ErrorDto> userNotFoundException() {
 		ErrorDto errorDto = new ErrorDto();
 		errorDto.setMessage(Constant.USER_NOT_FOUND);
 		errorDto.setStatusCode(HttpStatus.NOT_FOUND.value());
 		return ResponseEntity.ok().body(errorDto);
 	}
-	
+
 	@ExceptionHandler(RequestNotRaisedException.class)
-	public ResponseEntity<ErrorDto> requestNotRaisedException(){
+	public ResponseEntity<ErrorDto> requestNotRaisedException() {
 		ErrorDto errorDto = new ErrorDto();
 		errorDto.setMessage(Constant.REQUEST_NOT_RAISED);
 		errorDto.setStatusCode(HttpStatus.NOT_FOUND.value());

@@ -19,6 +19,7 @@ import com.matrimony.cassini.dto.FilterRequestDto;
 import com.matrimony.cassini.dto.InterestRequestDto;
 import com.matrimony.cassini.dto.InterestResponseDto;
 import com.matrimony.cassini.entity.User;
+import com.matrimony.cassini.exception.RequestNotRaisedException;
 import com.matrimony.cassini.exception.UserNotFoundException;
 import com.matrimony.cassini.service.UserInterestService;
 
@@ -69,5 +70,11 @@ public class UserInterestControllerTest {
 		ResponseEntity<InterestResponseDto> response = userInterestController.showInterest(interestRequestDto);
 		Assert.assertNotNull(response);
 
+	}
+	
+	@Test
+	public void getInterestedListTest() throws RequestNotRaisedException {
+	Mockito.when(userInterestService.requestList(Mockito.any())).thenReturn(new ArrayList<>());
+	assertNotNull(userInterestController.getInterestedList(1));
 	}
 }
