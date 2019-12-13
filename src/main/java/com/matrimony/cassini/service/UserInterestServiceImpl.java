@@ -98,9 +98,9 @@ public class UserInterestServiceImpl implements UserInterestService {
 		if (user.isPresent()) {
 			List<UserInterest> userMappings = userInterestRepository.findByFromUserAndStatus(user.get(),
 					Constant.ACCEPTED);
-			for (UserInterest UserMapping : userMappings) {
-				users.add(UserMapping.getToUser());
-			}
+			userMappings.forEach(intrested -> {
+				users.add(intrested.getToUser());
+			});
 		}
 		return users;
 	}
